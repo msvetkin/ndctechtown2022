@@ -1,0 +1,73 @@
+{
+  "version": 4,
+  "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 23,
+    "patch": 0
+  },
+  "configurePresets": [
+    {
+      "name": "default",
+      "displayName": "Default Config",
+      "description": "Default build using Ninja generator",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build/preset-${presetName}"
+    },
+    {
+      "name": "vcpkg",
+      "inherits": "default",
+      "hidden": true,
+      "toolchainFile": "${sourceDir}/vcpkg/scripts/buildsystems/vcpkg.cmake"
+    },
+    {
+      "name": "vcpkg-simple",
+      "inherits": "vcpkg",
+      "displayName": "vcpkg simple config",
+      "description": "vcpkg simple build using Ninja generator",
+      "cacheVariables": {
+        "VCPKG_MANIFEST_DIR": "${sourceDir}/package-managers/vcpkg/simple"
+      }
+    },
+    {
+      "name": "vcpkg-extended",
+      "inherits": "vcpkg",
+      "displayName": "vcpkg extended config",
+      "description": "vcpkg extended build using Ninja generator",
+      "cacheVariables": {
+        "VCPKG_MANIFEST_DIR": "${sourceDir}/package-managers/vcpkg/simple"
+      }
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "default",
+      "configurePreset": "default"
+    },
+    {
+      "name": "vcpkg-simple",
+      "configurePreset": "vcpkg-simple"
+    },
+    {
+      "name": "vcpkg-extended",
+      "configurePreset": "vcpkg-extended"
+    }
+  ],
+  "testPresets": [
+    {
+      "name": "default",
+      "configurePreset": "default",
+      "output": {"outputOnFailure": true},
+      "execution": {"noTestsAction": "error", "stopOnFailure": true}
+    },
+    {
+      "name": "vcpkg-simple",
+      "inherits": "default",
+      "configurePreset": "vcpkg-simple"
+    },
+    {
+      "name": "vcpkg-extended",
+      "inherits": "default",
+      "configurePreset": "vcpkg-extended"
+    }
+  ]
+}

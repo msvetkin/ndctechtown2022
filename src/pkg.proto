@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package api;
+
+message PkgRequest {
+    string name = 1;
+}
+
+message PkgInfo {
+    string info = 1;
+}
+
+service PackageManager {
+    rpc GetInfo(PkgRequest) returns (PkgInfo) {}
+}
